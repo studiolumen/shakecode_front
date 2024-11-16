@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  @keyframes show {
+    0%, 49.99% {
+      opacity: 0;
+      z-index: 1;
+    }
+    50%, 100% {
+      opacity: 1;
+      z-index: 5;
+    }
+  }
+}
+
+* {
+  @apply box-border;
+}
+body {
+  @apply flex justify-center items-center flex-col h-screen text-[color:var(--main\_text)] -mt-5 mb-[50px] mx-0 font-pretendard;
+  background: var(--background_color);
+}
+h1 {
+  @apply font-bold text-4xl m-0;
+}
+p {
+  @apply text-sm font-thin leading-5 tracking-[0.5px] text-[color:var(--sub\_text)] mt-5 mb-[30px] mx-0;
+}
+span {
+  @apply text-xs;
+}
+a {
+  @apply text-[color:var(--main\_text)] text-sm no-underline transition-[0.2s] duration-[ease-in-out] mx-0 my-[15px] hover:text-[#00C457];
+}
+button {
+  @apply border border-[color:var(--button\_color)] bg-[color:var(--button\_color)] text-[color:var(--button\_text)] text-xs font-[semibold] tracking-[1px] uppercase transition-transform duration-[80ms] ease-[ease-in] px-[45px] py-3 rounded-[20px] border-solid border-[#222222] active:scale-95;
+}
+button:focus {
+  outline: none;
+}
+button.ghost {
+  @apply bg-[white] border-[color:var(--button\_text)] text-[color:var(--background\_color)] font-[bold];
+}
+.ghost:hover {
+  @apply cursor-pointer;
+}
+form {
+  @apply bg-[color:var(--form\_background)] flex items-center justify-center flex-col h-full text-center px-[50px] py-0 rounded-[10px];
+}
+input {
+  @apply bg-[#181818] text-[color:var(--main\_text)] w-full mx-0 my-2 px-[15px] py-3 rounded-[5px] border-[#222222] border-[solid];
+  outline: none;
+}
+.container {
+  @apply bg-[color:var(--form\_background)] relative overflow-hidden w-[768px] max-w-full min-h-[480px] rounded-[10px] border-[#222222] border-[solid];
+}
+.form-container {
+  @apply absolute h-full transition-all duration-[0.6s] ease-[ease-in-out] border-[#222222] border-[solid] top-0;
+}
+.sign-in-container {
+  @apply w-6/12 z-[2] left-0;
+}
+.container.right-panel-active .sign-in-container {
+  @apply translate-x-full;
+}
+.sign-up-container {
+  @apply w-6/12 opacity-0 z-[1] left-0;
+}
+.container.right-panel-active .sign-up-container {
+  @apply translate-x-full opacity-100 z-[5] animate-[show_0.6s];
+}
+.overlay-container {
+  @apply absolute w-6/12 h-full overflow-hidden transition-transform duration-[0.6s] ease-[ease-in-out] z-[100] left-2/4 top-0;
+}
+.container.right-panel-active .overlay-container {
+  @apply -translate-x-full;
+}
+.overlay {
+  @apply bg-no-repeat bg-cover bg-[0_0] text-[color:var(--button\_text)] relative h-full w-[200%] translate-x-0 transition-transform duration-[0.6s] ease-[ease-in-out] -left-full;
+  background: #00c457;
+  background: -webkit-linear-gradient(to right, var(--button_color), #00c457);
+  background: linear-gradient(to right, var(--button_color), #00c457);
+}
+.container.right-panel-active .overlay {
+  @apply translate-x-2/4;
+}
+.overlay-panel {
+  @apply absolute flex items-center justify-center flex-col text-center h-full w-6/12 translate-x-0 transition-transform duration-[0.6s] ease-[ease-in-out] px-10 py-0 top-0;
+}
+.overlay-left {
+  @apply translate-x-[-20%];
+}
+.container.right-panel-active .overlay-left {
+  @apply translate-x-0;
+}
+.overlay-right {
+  @apply translate-x-0 right-0;
+}
+.container.right-panel-active .overlay-right {
+  @apply translate-x-[20%];
+}
+.social-container {
+  @apply mx-0 my-5;
+}
+.social-container a {
+  @apply border inline-flex justify-center items-center h-10 w-10 mx-[5px] my-0 rounded-[50%] border-solid border-[#DDDDDD];
+}
+footer {
+  @apply bg-[#222] text-white text-sm fixed text-center z-[999] bottom-0 inset-x-0;
+}
+footer p {
+  @apply mx-0 my-2.5;
+}
+footer i {
+  @apply text-[red];
+}
+footer a {
+  @apply text-[#3c97bf] no-underline;
+}
+.under {
+  @apply mb-2.5;
+}

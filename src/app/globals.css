@@ -1,10 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background_color: #121212;
+  --main_text: #f0f8ff;
+  --sub_text: #b0bec5;
+  --button_color: #181818;
+  --button_text: #ffffff;
+  --form_background: #1e1e1e;
 }
 
 @media (prefers-color-scheme: dark) {
