@@ -30,6 +30,7 @@
     "react/display-name": "off",
     "react-native/no-inline-styles": "off",
     "react-hooks/exhaustive-deps": "off",
+    "react/react-in-jsx-scope": "off",
     "object-curly-spacing": ["error", "always"],
     "indent": [
       "error",

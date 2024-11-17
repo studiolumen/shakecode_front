@@ -79,9 +79,7 @@ input {
 }
 .overlay {
   @apply bg-no-repeat bg-cover bg-[0_0] text-[color:var(--button\_text)] relative h-full w-[200%] translate-x-0 transition-transform duration-[0.6s] ease-[ease-in-out] -left-full;
-  background: #00c457;
-  background: -webkit-linear-gradient(to right, var(--button_color), #00c457);
-  background: linear-gradient(to right, var(--button_color), #00c457);
+  background: #1e1e1e;
 }
 .container.right-panel-active .overlay {
   @apply translate-x-2/4;
@@ -91,12 +89,16 @@ input {
 }
 .overlay-left {
   @apply translate-x-[-20%];
+  background: -webkit-linear-gradient(to left, var(--form_background), #00c457);
+  background: linear-gradient(to left, var(--form_background), #00c457);
 }
 .container.right-panel-active .overlay-left {
   @apply translate-x-0;
 }
 .overlay-right {
   @apply translate-x-0 right-0;
+  background: -webkit-linear-gradient(to right, var(--form_background), #00c457);
+  background: linear-gradient(to right, var(--form_background), #00c457);
 }
 .container.right-panel-active .overlay-right {
   @apply translate-x-[20%];
@@ -121,4 +123,13 @@ footer a {
 }
 .under {
   @apply mb-2.5;
+}
+.greeting {
+  @apply mb-2
+}
+.passwordHint {
+  @apply text-red-600 hidden text-sm
+}
+.signupBtn {
+  @apply mt-3
 }
