@@ -5,12 +5,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 import { Ranks, Testcase } from "@/app/psadder/type";
-import { ping } from "@/lib/api/auth.api";
 import { createProblem, getProblemList } from "@/lib/api/problem.api";
+import SessionChecker from "@/lib/util/sessionChecker";
 
 import "./style.css";
-
-import SessionChecker from "@/lib/util/sessionChecker";
 
 const PSAdder = () => {
   const preview = useRef<HTMLDivElement>(null);
