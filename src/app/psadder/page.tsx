@@ -1,7 +1,6 @@
 "use client";
 import markdownIt from "markdown-it";
 import markdownItMathjax from "markdown-it-mathjax3";
-import { redirect } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -129,7 +128,7 @@ const PSAdder = () => {
 
   useEffect(() => {
     ping().then((p) => {
-      if (!p) redirect("/login");
+      if (!p) location.href = "/login";
     });
   }, []);
 
