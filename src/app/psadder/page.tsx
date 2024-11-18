@@ -3,16 +3,18 @@ import markdownIt from "markdown-it";
 import markdownItMathjax from "markdown-it-mathjax3";
 import { redirect } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 import { Ranks, Testcase } from "@/app/psadder/type";
 import { ping } from "@/lib/api/auth.api";
-import { createProblem } from "@/lib/api/problem.api";
+import { createProblem, getProblemList } from "@/lib/api/problem.api";
 
 import "./style.css";
 
 const PSAdder = () => {
   const preview = useRef<HTMLDivElement>(null);
   const previewNotice = useRef<HTMLDivElement>(null);
+
   const [title, setTitle] = useState<string>("");
   const [difficulty, setDifficulty] = useState<number>(0);
   const [description, setDescription] = useState<string>("");
@@ -90,25 +92,36 @@ const PSAdder = () => {
   };
 
   const save = () => {
-    createProblem({
-      name: title,
-      difficulty,
-      description,
-      memory_limit,
-      time_limit,
-      category,
-      testcases,
-      restricted: 0,
-    }).then((res) => {
-      if (res.status === 201) {
-        alert("저장 성공");
-      } else {
-        alert("저장 실패");
-      }
-    });
+    toast.promise(
+      createProblem({
+        name: title,
+        difficulty,
+        description,
+        memory_limit,
+        time_limit,
+        category,
+        testcases,
+        restricted: 0,
+      }),
+      {
+        pending: "저장중입니다...",
+        success: "저장에 성공하였습니다.",
+        error: "저장에 실패하였습니다.",
+      },
+    );
   };
 
-  const load = () => {};
+  const load = () => {
+    toast
+      .promise(getProblemList, {
+        pending: "문제 목록을 불러오는 중입니다…",
+        success: "문제 목록을 성공적으로 불러왔습니다",
+        error: "문제 목록을 불러오는데 실패했습니다",
+      })
+      .then((problemList) => {
+        console.log();
+      });
+  };
 
   useEffect(() => {
     updatePreview();
@@ -116,10 +129,7 @@ const PSAdder = () => {
 
   useEffect(() => {
     ping().then((p) => {
-      if (!p) {
-        // history push
-        redirect("/login");
-      }
+      if (!p) redirect("/login");
     });
   }, []);
 

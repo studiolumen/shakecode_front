@@ -1,12 +1,11 @@
 "use client";
 
 import React, { FormEvent, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 import { passwordLogin, register } from "@/lib/api/auth.api";
 
 import "./style.css";
-
-import { toast, ToastContainer } from "react-toastify";
 
 const Login = () => {
   const container = useRef<HTMLDivElement>(null);
