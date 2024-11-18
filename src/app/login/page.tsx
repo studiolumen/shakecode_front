@@ -7,8 +7,6 @@ import { passwordLogin, register } from "@/lib/api/auth.api";
 
 import "./style.css";
 
-import { useSearchParams } from "next/navigation";
-
 const Login = () => {
   const container = useRef<HTMLDivElement>(null);
 
