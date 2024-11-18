@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { logout, refreshJWT } from "@/lib/api/auth";
+import { logout, refreshJWT } from "@/lib/api/auth.api";
 import * as cookie from "@/lib/cookie";
 
 const MAX_REQUESTS_COUNT = 1;

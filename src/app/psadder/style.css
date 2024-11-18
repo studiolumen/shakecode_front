@@ -1,0 +1,32 @@
+body {
+  @apply flex flex-row justify-around bg-[#121212] text-white p-5;
+  font-family: pretendard;
+}
+.container {
+  @apply w-4/5 max-w-[600px] rounded-2xl;
+}
+textarea,
+input,
+button {
+  @apply w-full text-white bg-[#1e1e1e] border text-base mx-0 my-2.5 p-2 border-solid border-[#444];
+}
+textarea:focus,
+input:focus {
+  @apply border-[#4563eb];
+  outline: none;
+}
+label {
+  @apply font-[bold] text-white mt-2.5;
+}
+.output {
+  @apply bg-[#1e1e1e] border text-white whitespace-pre-wrap mt-2.5 p-2.5 border-solid border-[#444];
+}
+button {
+  @apply w-auto bg-[#4563eb] text-white cursor-pointer font-[bold] px-4 py-2 border-[none] hover:bg-[#4563eb];
+}
+.test-case-group {
+  @apply flex gap-2.5;
+}
+.test-case-group button {
+  @apply w-auto bg-[#4563eb] text-white cursor-pointer p-2 border-[none] hover:bg-[#4563eb];
+}

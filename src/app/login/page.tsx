@@ -1,10 +1,12 @@
 "use client";
 
-import { FormEvent, useRef, useState } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 
-import { passwordLogin, register } from "@/lib/api/auth";
+import { passwordLogin, register } from "@/lib/api/auth.api";
 
 import "./style.css";
+
+import { toast, ToastContainer } from "react-toastify";
 
 const Login = () => {
   const container = useRef<HTMLDivElement>(null);
@@ -27,25 +29,28 @@ const Login = () => {
   const signIn = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    passwordLogin(email, password)
-      .then((data) => {
-        alert("로그인 성공");
-      })
-      .catch((e) => {
-        console.log(e);
-        alert("로그인에 실패하였습니다");
-      });
+    toast.promise(passwordLogin(email, password), {
+      pending: "로그인중...",
+      success: "로그인 성공",
+      error: "로그인 실패",
+    });
   };
 
   const signUp = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    register(name, email, nickname, password)
-      .then(() => {
-        alert("회원가입 성공");
+
+    toast
+      .promise(register(name, email, nickname, password), {
+        pending: "회원가입중...",
+        success: "회원가입 성공",
+        error: "회원가입 실패",
       })
-      .catch((e) => {
-        console.log(e);
-        alert("회원가입에 실패하였습니다");
+      .then(() => {
+        toast("로그인 해주세요");
+        hideSignUp();
+      })
+      .catch(() => {
+        toast("관리자에게 문의해주세요");
       });
   };
 

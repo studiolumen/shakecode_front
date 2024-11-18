@@ -11,6 +11,15 @@ const client = axios.create({
   },
 });
 
+export const ping = async () => {
+  try {
+    const res = await axiosClient.get("/auth/ping");
+    return res.status.toString().at(0) === "2";
+  } catch (e) {
+    return false;
+  }
+};
+
 export const register = async (
   name: string,
   email: string,
@@ -32,7 +41,7 @@ export const register = async (
 export const passwordLogin = async (email: string, password: string) => {
   console.log(process.env);
   const { data } = await client.post("/auth/login/password", {
-    id: email,
+    email,
     password,
   });
   cookie.set("token", data.accessToken, {});
