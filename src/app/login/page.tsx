@@ -7,6 +7,8 @@ import { passwordLogin, register } from "@/lib/api/auth.api";
 
 import "./style.css";
 
+import { useSearchParams } from "next/navigation";
+
 const Login = () => {
   const container = useRef<HTMLDivElement>(null);
 
@@ -28,11 +30,25 @@ const Login = () => {
   const signIn = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    toast.promise(passwordLogin(email, password), {
-      pending: "로그인중...",
-      success: "로그인 성공",
-      error: "로그인 실패",
-    });
+    toast
+      .promise(passwordLogin(email, password), {
+        pending: "로그인중...",
+        success: "로그인 성공",
+        error: "로그인 실패",
+      })
+      .then(() => {
+        const urlSplit = location.href.split("?");
+        console.log(urlSplit);
+        if (urlSplit.length == 2 && urlSplit[1]) {
+          const query = urlSplit[1].split("&");
+          const redirect = query.find((q) => q.startsWith("redirect="));
+          console.log(query);
+          console.log(redirect);
+          if (redirect && redirect.split("=")[1]) {
+            location.href = redirect.split("=")[1];
+          }
+        }
+      });
   };
 
   const signUp = (e: FormEvent<HTMLFormElement>) => {

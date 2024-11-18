@@ -10,6 +10,8 @@ import { createProblem, getProblemList } from "@/lib/api/problem.api";
 
 import "./style.css";
 
+import SessionChecker from "@/lib/util/sessionChecker";
+
 const PSAdder = () => {
   const preview = useRef<HTMLDivElement>(null);
   const previewNotice = useRef<HTMLDivElement>(null);
@@ -127,9 +129,7 @@ const PSAdder = () => {
   }, [title, difficulty, description, memory_limit, time_limit, testcases]);
 
   useEffect(() => {
-    ping().then((p) => {
-      if (!p) location.href = "/login";
-    });
+    SessionChecker();
   }, []);
 
   return (
