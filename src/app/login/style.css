@@ -19,14 +19,18 @@
   @apply box-border;
 }
 body {
-  @apply flex justify-center items-center flex-col h-screen text-[color:var(--main\_text)] -mt-5 mb-[50px] mx-0 font-pretendard;
+  @apply flex justify-center items-center flex-col h-screen text-[color:var(--main\_text)] bg-no-repeat bg-center bg-contain overflow-hidden -mt-5 mb-[50px] mx-0 before:content-[''] before:absolute before:w-full before:h-full before:bg-no-repeat before:bg-center before:bg-contain before:blur-[30px] before:opacity-20 before:z-[-1] before:left-0 before:top-0 after:content-[''] after:absolute after:w-full after:h-full after:backdrop-blur-[3px] after:z-[-1] after:left-0 after:top-0;
   background: var(--background_color);
+  font-family: pretendard;
+}
+body::after {
+  background: rgba(18, 18, 18, 0.2);
 }
 h1 {
-  @apply font-bold text-4xl m-0;
+  @apply font-[bold] m-0;
 }
 p {
-  @apply text-sm font-thin leading-5 tracking-[0.5px] text-[color:var(--sub\_text)] mt-5 mb-[30px] mx-0;
+  @apply text-sm font-thin leading-5 tracking-[0.5px] text-[color:var(--sub\_text)] mt-[50px] mb-2.5 mx-0;
 }
 span {
   @apply text-xs;
@@ -35,13 +39,14 @@ a {
   @apply text-[color:var(--main\_text)] text-sm no-underline transition-[0.2s] duration-[ease-in-out] mx-0 my-[15px] hover:text-[#00C457];
 }
 button {
-  @apply border border-[color:var(--button\_color)] bg-[color:var(--button\_color)] text-[color:var(--button\_text)] text-xs font-[semibold] tracking-[1px] uppercase transition-transform duration-[80ms] ease-[ease-in] px-[45px] py-3 rounded-[20px] border-solid border-[#222222] active:scale-95;
+  @apply border border-[color:var(--button\_color)] bg-[color:var(--button\_color)] text-[color:var(--button\_text)] text-xs font-[semibold] tracking-[1px] uppercase transition-transform duration-[80ms] ease-[ease-in] cursor-pointer px-[45px] py-3 rounded-[20px] border-solid border-[#222222] border-[solid] active:scale-95 disabled:bg-[#444] disabled:text-[#888] disabled:cursor-not-allowed disabled:opacity-50 disabled:border-[#444];
 }
 button:focus {
   outline: none;
 }
 button.ghost {
   @apply bg-[white] border-[color:var(--button\_text)] text-[color:var(--background\_color)] font-[bold];
+  font-family: pretendard;
 }
 .ghost:hover {
   @apply cursor-pointer;
@@ -54,7 +59,7 @@ input {
   outline: none;
 }
 .container {
-  @apply bg-[color:var(--form\_background)] relative overflow-hidden w-[768px] max-w-full min-h-[480px] rounded-[10px] border-[#222222] border-[solid];
+  @apply bg-[color:var(--form\_background)] relative overflow-hidden w-[768px] max-w-full min-h-[480px] rounded-[10px] border-[#222222] border-[solid] backdrop-blur-[10px];
 }
 .form-container {
   @apply absolute h-full transition-all duration-[0.6s] ease-[ease-in-out] border-[#222222] border-[solid] top-0;
@@ -79,7 +84,8 @@ input {
 }
 .overlay {
   @apply bg-no-repeat bg-cover bg-[0_0] text-[color:var(--button\_text)] relative h-full w-[200%] translate-x-0 transition-transform duration-[0.6s] ease-[ease-in-out] -left-full;
-  background: #1e1e1e;
+  background: #00c457;
+  background: transparent;
 }
 .container.right-panel-active .overlay {
   @apply translate-x-2/4;
@@ -89,16 +95,12 @@ input {
 }
 .overlay-left {
   @apply translate-x-[-20%];
-  background: -webkit-linear-gradient(to left, var(--form_background), #00c457);
-  background: linear-gradient(to left, var(--form_background), #00c457);
 }
 .container.right-panel-active .overlay-left {
   @apply translate-x-0;
 }
 .overlay-right {
   @apply translate-x-0 right-0;
-  background: -webkit-linear-gradient(to right, var(--form_background), #00c457);
-  background: linear-gradient(to right, var(--form_background), #00c457);
 }
 .container.right-panel-active .overlay-right {
   @apply translate-x-[20%];
@@ -124,12 +126,42 @@ footer a {
 .under {
   @apply mb-2.5;
 }
-.greeting {
-  @apply mb-2
+.und {
+  @apply transition-[0.2s] duration-[ease-in-out] hover:bg-[#202020];
 }
-.passwordHint {
-  @apply text-red-600 hidden text-sm
+.logo-container {
+  @apply flex justify-center items-center mb-5;
 }
-.signupBtn {
-  @apply mt-3
+.logo-container img {
+  @apply w-[120px] h-auto;
+}
+.container {
+  background: transparent;
+}
+canvas {
+  @apply absolute z-[-1] w-full h-full;
+  background: transparent;
+}
+#passwordCriteria {
+  @apply max-h-0 opacity-0 overflow-hidden text-xs pl-0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  list-style: none;
+}
+#passwordCriteria.visible {
+  @apply max-h-[150px] opacity-100;
+}
+#passwordCriteria li {
+  @apply text-[#424242] transition-[color] duration-[0.3s] ease-[ease];
+}
+#passwordCriteria li.valid {
+  @apply text-[white];
+}
+.password-container {
+  @apply relative w-full;
+}
+.password-container input {
+  @apply w-full;
+}
+.password-container i {
+  @apply absolute -translate-y-2/4 cursor-pointer text-[#747474] right-2.5 top-2/4 hover:text-white;
 }

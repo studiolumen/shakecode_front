@@ -3,6 +3,7 @@
 import React, { FormEvent, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
+import CanvasEffect from "@/app/login/CanvasEffect";
 import { passwordLogin, register } from "@/lib/api/auth.api";
 
 import "./style.css";
@@ -16,13 +17,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const showSignUp = () => {
-    container.current &&
-      (container.current as HTMLElement).classList.add("right-panel-active");
+    container.current?.classList.add("right-panel-active");
   };
 
   const hideSignUp = () => {
-    container.current &&
-      (container.current as HTMLElement).classList.remove("right-panel-active");
+    container.current?.classList.remove("right-panel-active");
   };
 
   const signIn = (e: FormEvent<HTMLFormElement>) => {
@@ -36,12 +35,9 @@ const Login = () => {
       })
       .then(() => {
         const urlSplit = location.href.split("?");
-        console.log(urlSplit);
         if (urlSplit.length == 2 && urlSplit[1]) {
           const query = urlSplit[1].split("&");
           const redirect = query.find((q) => q.startsWith("redirect="));
-          console.log(query);
-          console.log(redirect);
           if (redirect && redirect.split("=")[1]) {
             location.href = redirect.split("=")[1];
           }
@@ -73,14 +69,16 @@ const Login = () => {
 
   return (
     <>
-      <div ref={container} className="container">
+      <CanvasEffect />
+      <div ref={container} className="container" id="container">
         <div className="form-container sign-up-container">
-          <form onSubmit={signUp}>
-            <h1>Create Account</h1>
-            <span className={"greeting"}>Greetings</span>
+          <form id="signUpForm" onSubmit={signUp}>
+            <h1>계정 만들기</h1>
+            <span>환영합니다!</span>
             <input
               type="text"
-              placeholder="Name"
+              id="name"
+              placeholder="이름"
               onInput={(e: FormEvent<HTMLInputElement>) =>
                 setName((e.target as HTMLInputElement).value)
               }
@@ -88,18 +86,9 @@ const Login = () => {
               required
             />
             <input
-              type="email"
-              id="email"
-              placeholder="Email"
-              onInput={(e: FormEvent<HTMLInputElement>) =>
-                setEmail((e.target as HTMLInputElement).value)
-              }
-              value={email}
-              required
-            />
-            <input
               type="text"
-              placeholder="Nickname"
+              id="id"
+              placeholder="아이디"
               onInput={(e: FormEvent<HTMLInputElement>) =>
                 setNickname((e.target as HTMLInputElement).value)
               }
@@ -107,47 +96,68 @@ const Login = () => {
               required
             />
             <input
-              type="password"
-              placeholder="Password"
-              onInput={(e: FormEvent<HTMLInputElement>) =>
-                setPassword((e.target as HTMLInputElement).value)
-              }
-              value={password}
-              required
-            />
-            <p className="passwordHint">
-              Password must be at least 8 characters, include an uppercase
-              letter, a number, and a special character.
-            </p>
-            <button type="submit" className={"signupBtn"}>
-              Sign Up
-            </button>
-          </form>
-        </div>
-        <div className="form-container sign-in-container">
-          <form onSubmit={signIn}>
-            <h1>Log-In</h1>
-            <span className="under">Welcome Back</span>
-            <input
               type="email"
-              placeholder="Email"
+              id="email"
+              placeholder="이메일 주소"
               onInput={(e: FormEvent<HTMLInputElement>) =>
                 setEmail((e.target as HTMLInputElement).value)
               }
               value={email}
               required
             />
+            <div className="password-container">
+              <input
+                type="password"
+                id="password"
+                placeholder="비밀번호"
+                onInput={(e: FormEvent<HTMLInputElement>) =>
+                  setPassword((e.target as HTMLInputElement).value)
+                }
+                value={password}
+                required
+              />
+            </div>
+            <ul id="passwordCriteria">
+              <li id="lengthCriteria">8글자 이상이 필요합니다</li>
+              <li id="uppercaseCriteria">대문자가 하나 이상 필요합니다</li>
+              <li id="numberCriteria">숫자가 하나 이상 필요합니다</li>
+              <li id="specialCharCriteria">특수기호가 필요합니다(!@#$%^&*)</li>
+            </ul>
+            <button type="submit" className="und">
+              회원 가입
+            </button>
+          </form>
+        </div>
+        <div className="form-container sign-in-container">
+          <form onSubmit={signIn}>
+            <h1>로그인</h1>
+            <span className="under">반갑습니다!</span>
             <input
-              type="password"
-              placeholder="Password"
+              type="email"
+              placeholder="이메일 또는 이름"
               onInput={(e: FormEvent<HTMLInputElement>) =>
-                setPassword((e.target as HTMLInputElement).value)
+                setEmail((e.target as HTMLInputElement).value)
               }
-              value={password}
+              value={email}
               required
             />
-            <p onClick={forgetPassword}>Forgot your password?</p>
-            <button type="submit">Log-In</button>
+            <div className="password-container">
+              <input
+                type="password"
+                id="loginPassword"
+                placeholder="비밀번호"
+                onInput={(e: FormEvent<HTMLInputElement>) =>
+                  setPassword((e.target as HTMLInputElement).value)
+                }
+                value={password}
+                required
+              />
+              <i id="toggleLoginPassword" className="fas fa-eye"></i>
+            </div>
+            <a onClick={forgetPassword}>비밀번호를 잊으셨나요?</a>
+            <button type="submit" className="und">
+              로그인
+            </button>
           </form>
         </div>
         <div className="overlay-container">
@@ -156,16 +166,16 @@ const Login = () => {
               <h1>
                 Greetings, <br /> New shaker!
               </h1>
-              <p>Jump into your field</p>
+              <p>이미 계정이 있으신가요?</p>
               <button className="ghost" onClick={hideSignUp}>
-                Log-In
+                로그인하기
               </button>
             </div>
             <div className="overlay-panel overlay-right">
               <h1>Welcome back!</h1>
-              <p>Return to your battlefield</p>
+              <p>계정이 없으신가요?</p>
               <button className="ghost" onClick={showSignUp}>
-                Create account
+                새 계정 만들기
               </button>
             </div>
           </div>

@@ -34,6 +34,8 @@ const LoadProblem = ({
       display: "flex",
       flexDirection: "column" as FlexDirection,
       alignItems: "center",
+
+      backdropFilter: "blur(15px)",
     },
   };
 
