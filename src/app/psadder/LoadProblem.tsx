@@ -77,7 +77,8 @@ const LoadProblem = ({
         <table style={{ width: "100%" }}>
           <thead>
             <tr>
-              <th>문제 번호</th>
+              <th>전역 문제 번호</th>
+              <th>PUBLIC 문제 번호</th>
               <th>문제 이름</th>
               <th>카테고리</th>
               <th>설명</th>
@@ -99,6 +100,7 @@ const LoadProblem = ({
                   style={{ textAlign: "center" }}
                   onClick={() => openProblem(problem.id.toString())}>
                   <td style={{ padding: "4px" }}>{problem.id}</td>
+                  <td style={{ padding: "4px" }}>{problem.pid}</td>
                   <td style={{ padding: "4px" }}>{problem.title}</td>
                   <td style={{ padding: "4px" }}>{problem.category}</td>
                   <td style={{ padding: "4px" }}>

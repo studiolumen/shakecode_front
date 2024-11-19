@@ -23,6 +23,7 @@ const PSAdder = () => {
   const [loadProblemPage, setLoadProblemPage] = useState(false);
 
   const [id, setId] = useState<string>("");
+  const [pid, setPid] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [difficulty, setDifficulty] = useState<number>(0);
   const [description, setDescription] = useState<string>("");
@@ -119,6 +120,7 @@ const PSAdder = () => {
         },
       )
       .then(() => {
+        if (parseInt(pid)) update();
         setIsSaved(true);
       })
       .catch((e) => {
@@ -131,6 +133,7 @@ const PSAdder = () => {
       .promise(
         updateProblem({
           id: parseInt(id),
+          pid: parseInt(pid),
           name: title,
           difficulty,
           description,
@@ -172,6 +175,7 @@ const PSAdder = () => {
           error: "불러오기 실패",
         })
         .then((problem) => {
+          setPid(problem.pid);
           setTitle(problem.name);
           setDifficulty(problem.difficulty);
           setDescription(problem.description);
@@ -179,15 +183,18 @@ const PSAdder = () => {
           setTime_limit(problem.time_limit);
           setCategory(problem.category);
           setTestcases(problem.testCases);
+          setIsSaved(true);
         });
     }
   }, [id]);
 
   useEffect(() => {
+    setIsSaved(false);
     updatePreview();
   }, [title, difficulty, description, memory_limit, time_limit, testcases]);
 
   useEffect(() => {
+    setIsSaved(true);
     SessionChecker();
   }, []);
 
@@ -195,14 +202,22 @@ const PSAdder = () => {
     <>
       <div className={"container"}>
         <h1>AL PS 문제 추가기</h1>
-        <label>문제 번호</label>
+        <label>전역 문제 번호 (수정 불가)</label>
         <textarea
           id="id"
           rows={1}
           value={id}
+          onInput={(e) => setId((e.target as HTMLTextAreaElement).value)}
+          disabled></textarea>
+        <label>PUBLIC 문제 번호</label>
+        <textarea
+          id="pid"
+          rows={1}
+          value={pid}
           onInput={(e) =>
-            setId((e.target as HTMLTextAreaElement).value)
+            setPid((e.target as HTMLTextAreaElement).value)
           }></textarea>
+        <label>문제 난이도</label>
         <label>문제 제목</label>
         <textarea
           id="title"
@@ -225,7 +240,7 @@ const PSAdder = () => {
         <label>문제 본문 내용</label>
         <textarea
           id="description"
-          rows={4}
+          rows={30}
           value={description}
           onInput={(e) =>
             setDescription((e.target as HTMLTextAreaElement).value)
