@@ -15,6 +15,13 @@ export type Testcase = {
   show_user: boolean;
 };
 
+export type ProblemSummary = {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+};
+
 export const Ranks: { [key: number]: string } = {
   0: "<span style='color: #A0A0A0'>I1</span>",
   1: "<span style='color: #A0A0A0'>I2</span>",

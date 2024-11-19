@@ -1,11 +1,12 @@
 "use client";
 import markdownIt from "markdown-it";
 import markdownItMathjax from "markdown-it-mathjax3";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
+import LoadProblem from "@/app/psadder/LoadProblem";
 import { Ranks, Testcase } from "@/app/psadder/type";
-import { createProblem, getProblemList } from "@/lib/api/problem.api";
+import { createProblem, getProblem } from "@/lib/api/problem.api";
 import SessionChecker from "@/lib/util/sessionChecker";
 
 import "./style.css";
@@ -14,6 +15,10 @@ const PSAdder = () => {
   const preview = useRef<HTMLDivElement>(null);
   const previewNotice = useRef<HTMLDivElement>(null);
 
+  const [isSaved, setIsSaved] = useState(true);
+  const [loadProblemPage, setLoadProblemPage] = useState(false);
+
+  const [id, setId] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [difficulty, setDifficulty] = useState<number>(0);
   const [description, setDescription] = useState<string>("");
@@ -91,36 +96,57 @@ const PSAdder = () => {
   };
 
   const save = () => {
-    toast.promise(
-      createProblem({
-        name: title,
-        difficulty,
-        description,
-        memory_limit,
-        time_limit,
-        category,
-        testcases,
-        restricted: 0,
-      }),
-      {
-        pending: "저장중입니다...",
-        success: "저장에 성공하였습니다.",
-        error: "저장에 실패하였습니다.",
-      },
-    );
+    toast
+      .promise(
+        createProblem({
+          name: title,
+          difficulty,
+          description,
+          memory_limit,
+          time_limit,
+          category,
+          testcases,
+          restricted: 0,
+        }),
+        {
+          pending: "저장중입니다...",
+          success: "저장에 성공하였습니다.",
+          error: "저장에 실패하였습니다.",
+        },
+      )
+      .then(() => {
+        setIsSaved(true);
+      });
   };
 
   const load = () => {
-    toast
-      .promise(getProblemList, {
-        pending: "문제 목록을 불러오는 중입니다…",
-        success: "문제 목록을 성공적으로 불러왔습니다",
-        error: "문제 목록을 불러오는데 실패했습니다",
-      })
-      .then((problemList) => {
-        console.log();
-      });
+    setLoadProblemPage(true);
   };
+
+  useEffect(() => {
+    if (
+      parseInt(id) &&
+      (isSaved ||
+        (!isSaved &&
+          confirm("수정사항을 무시하고 새로운 문제를 불러오시겠습니까?")))
+    ) {
+      toast
+        .promise(getProblem(parseInt(id)), {
+          pending: "불러오는 중...",
+          success: "불러오기 성공",
+          error: "불러오기 실패",
+        })
+        .then((problem) => {
+          setTitle(problem.name);
+          setDifficulty(problem.difficulty);
+          setDescription(problem.description);
+          setMemory_limit(problem.memory_limit);
+          setTime_limit(problem.time_limit);
+          setCategory(problem.category);
+          setTestcases(problem.testCases);
+        });
+    }
+  }, [id]);
 
   useEffect(() => {
     updatePreview();
@@ -134,6 +160,14 @@ const PSAdder = () => {
     <>
       <div className={"container"}>
         <h1>AL PS 문제 추가기</h1>
+        <label>문제 번호</label>
+        <textarea
+          id="id"
+          rows={1}
+          value={id}
+          onInput={(e) =>
+            setId((e.target as HTMLTextAreaElement).value)
+          }></textarea>
         <label>문제 제목</label>
         <textarea
           id="title"
@@ -252,6 +286,11 @@ const PSAdder = () => {
         <h1 ref={previewNotice}>본문 미리보기</h1>
         <div ref={preview} className="preview"></div>
       </div>
+      <LoadProblem
+        loadProblemPage={loadProblemPage}
+        setLoadProblemPage={setLoadProblemPage}
+        setProblemId={setId}
+      />
     </>
   );
 };

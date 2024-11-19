@@ -31,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
+        id={"__next"}
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ToastProvider>{children}</ToastProvider>
       </body>

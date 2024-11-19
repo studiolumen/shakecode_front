@@ -2,6 +2,7 @@ import axios from "axios";
 
 import axiosClient from "@/lib/api/axiosClient";
 import * as cookie from "@/lib/cookie";
+import SessionChecker from "@/lib/util/sessionChecker";
 
 const client = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -57,7 +58,8 @@ export const logout = async (doNotRemoveToken = false) => {
 
   cookie.remove("token");
   localStorage.clear();
-  window.location.href = "/";
+
+  SessionChecker();
 };
 
 export const refreshJWT = async ({ token }: { token: string }) => {
