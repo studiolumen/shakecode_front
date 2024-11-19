@@ -5,6 +5,10 @@ export const createProblem = async (problem: Problem) => {
   return await axiosClient.post("/problem", problem);
 };
 
+export const updateProblem = async (problem: Problem) => {
+  return await axiosClient.post("/problem/update", problem);
+};
+
 export const getProblem = async (id: number) => {
   return (await axiosClient.get(`/problem/full?id=${id}`)).data;
 };

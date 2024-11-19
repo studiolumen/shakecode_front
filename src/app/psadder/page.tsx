@@ -6,7 +6,11 @@ import { toast } from "react-toastify";
 
 import LoadProblem from "@/app/psadder/LoadProblem";
 import { Ranks, Testcase } from "@/app/psadder/type";
-import { createProblem, getProblem } from "@/lib/api/problem.api";
+import {
+  createProblem,
+  getProblem,
+  updateProblem,
+} from "@/lib/api/problem.api";
 import SessionChecker from "@/lib/util/sessionChecker";
 
 import "./style.css";
@@ -116,6 +120,36 @@ const PSAdder = () => {
       )
       .then(() => {
         setIsSaved(true);
+      })
+      .catch((e) => {
+        toast(e.response.data.message);
+      });
+  };
+
+  const update = () => {
+    toast
+      .promise(
+        updateProblem({
+          name: title,
+          difficulty,
+          description,
+          memory_limit,
+          time_limit,
+          category,
+          testcases,
+          restricted: 0,
+        }),
+        {
+          pending: "저장중입니다...",
+          success: "저장에 성공하였습니다.",
+          error: "저장에 실패하였습니다.",
+        },
+      )
+      .then(() => {
+        setIsSaved(true);
+      })
+      .catch((e) => {
+        toast(e.response.data.message);
       });
   };
 
@@ -280,6 +314,7 @@ const PSAdder = () => {
             setCategory((e.target as HTMLTextAreaElement).value)
           }></textarea>
         <button onClick={save}>저장</button>
+        <button onClick={update}>수정</button>
         <button onClick={load}>불러오기</button>
       </div>
       <div className={"container"}>
