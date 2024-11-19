@@ -86,6 +86,7 @@ const LoadProblem = ({
           </thead>
           <tbody>
             {problemList
+              .sort((a, b) => a.pid - b.pid)
               .filter(
                 (p) =>
                   !search ||
