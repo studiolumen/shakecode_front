@@ -9,6 +9,18 @@ export type Problem = {
   restricted: number;
 };
 
+export type UpdateProblem = {
+  id: number;
+  name: string;
+  difficulty: number;
+  description: string;
+  memory_limit: number;
+  time_limit: number;
+  category: string;
+  testcases: Testcase[];
+  restricted: number;
+};
+
 export type Testcase = {
   input: string;
   output: string;

@@ -1,11 +1,11 @@
-import { Problem } from "@/app/psadder/type";
+import { Problem, UpdateProblem } from "@/app/psadder/type";
 import axiosClient from "@/lib/api/axiosClient";
 
 export const createProblem = async (problem: Problem) => {
   return await axiosClient.post("/problem", problem);
 };
 
-export const updateProblem = async (problem: Problem) => {
+export const updateProblem = async (problem: UpdateProblem) => {
   return await axiosClient.post("/problem/update", problem);
 };
 

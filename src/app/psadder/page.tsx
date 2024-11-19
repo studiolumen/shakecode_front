@@ -130,6 +130,7 @@ const PSAdder = () => {
     toast
       .promise(
         updateProblem({
+          id: parseInt(id),
           name: title,
           difficulty,
           description,
