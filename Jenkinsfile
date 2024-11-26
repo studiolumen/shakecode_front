@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    echo "NEXT_PUBLIC_API_BASE_URL=https://shakecode.sdlumen.co.kr/api" >> .env
+                    echo "NEXT_PUBLIC_API_BASE_URL=https://api.shakecode.net" >> .env
                     """
                 }
             }
