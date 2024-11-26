@@ -42,6 +42,7 @@ const Login = () => {
             location.href = redirect.split("=")[1];
           }
         }
+        location.href = "/";
       });
   };
 
