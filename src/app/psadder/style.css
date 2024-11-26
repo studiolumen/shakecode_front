@@ -1,6 +1,6 @@
 body {
   @apply flex flex-row justify-around bg-[#121212] text-white p-5;
-  font-family: pretendard;
+  font-family: pretendard, sans-serif;
 }
 .container {
   @apply w-4/5 max-w-[600px] rounded-2xl;
@@ -24,6 +24,11 @@ label {
 button {
   @apply w-auto bg-[#4563eb] text-white cursor-pointer font-[bold] px-4 py-2 border-[none] hover:bg-[#4563eb];
 }
+
+button.delete {
+  @apply bg-red-600
+}
+
 .test-case-group {
   @apply flex gap-2.5;
 }

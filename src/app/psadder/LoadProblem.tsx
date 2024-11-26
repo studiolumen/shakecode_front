@@ -6,7 +6,7 @@ import Modal from "react-modal";
 import { toast } from "react-toastify";
 
 import { ProblemSummary } from "@/app/psadder/type";
-import { getProblemList } from "@/lib/api/problem.api";
+import { getList } from "@/lib/api/problem.api";
 
 import FlexDirection = Property.FlexDirection;
 
@@ -41,7 +41,7 @@ const LoadProblem = ({
 
   const afterOpenModal = () => {
     toast
-      .promise(getProblemList, {
+      .promise(getList, {
         pending: "문제 목록을 불러오는 중입니다…",
         success: "문제 목록을 성공적으로 불러왔습니다",
         error: "문제 목록을 불러오는데 실패했습니다",

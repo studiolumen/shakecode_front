@@ -1,18 +1,22 @@
 import { Problem, UpdateProblem } from "@/app/psadder/type";
 import axiosClient from "@/lib/api/axiosClient";
 
-export const createProblem = async (problem: Problem) => {
+export const create = async (problem: Problem) => {
   return await axiosClient.post("/problem", problem);
 };
 
-export const updateProblem = async (problem: UpdateProblem) => {
+export const update = async (problem: UpdateProblem) => {
   return await axiosClient.post("/problem/update", problem);
 };
 
-export const getProblem = async (id: number) => {
+export const get = async (id: number) => {
   return (await axiosClient.get(`/problem/full?id=${id}`)).data;
 };
 
-export const getProblemList = async (all?: boolean) => {
+export const getList = async (all?: boolean) => {
   return (await axiosClient.get(`/problem/list?all=${!!all}`)).data;
+};
+
+export const deleteProblem = async (id: number) => {
+  return (await axiosClient.delete(`/problem/?id=${id}`)).data;
 };

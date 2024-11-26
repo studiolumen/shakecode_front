@@ -21,7 +21,7 @@
 body {
   @apply flex justify-center items-center flex-col h-screen text-[color:var(--main\_text)] bg-no-repeat bg-center bg-contain overflow-hidden -mt-5 mb-[50px] mx-0 before:content-[''] before:absolute before:w-full before:h-full before:bg-no-repeat before:bg-center before:bg-contain before:blur-[30px] before:opacity-20 before:z-[-1] before:left-0 before:top-0 after:content-[''] after:absolute after:w-full after:h-full after:backdrop-blur-[3px] after:z-[-1] after:left-0 after:top-0;
   background: var(--background_color);
-  font-family: pretendard;
+  font-family: pretendard, sans-serif;
 }
 body::after {
   background: rgba(18, 18, 18, 0.2);
@@ -39,14 +39,14 @@ a {
   @apply text-[color:var(--main\_text)] text-sm no-underline transition-[0.2s] duration-[ease-in-out] mx-0 my-[15px] hover:text-[#00C457];
 }
 button {
-  @apply border border-[color:var(--button\_color)] bg-[color:var(--button\_color)] text-[color:var(--button\_text)] text-xs font-[semibold] tracking-[1px] uppercase transition-transform duration-[80ms] ease-[ease-in] cursor-pointer px-[45px] py-3 rounded-[20px] border-solid border-[#222222] border-[solid] active:scale-95 disabled:bg-[#444] disabled:text-[#888] disabled:cursor-not-allowed disabled:opacity-50 disabled:border-[#444];
+  @apply border border-[color:var(--button\_color)] bg-[color:var(--button\_color)] text-[color:var(--button\_text)] text-xs font-[semibold] tracking-[1px] uppercase transition-transform duration-[80ms] ease-[ease-in] cursor-pointer px-[45px] py-3 rounded-[20px] border-solid border-[#222222] active:scale-95 disabled:bg-[#444] disabled:text-[#888] disabled:cursor-not-allowed disabled:opacity-50 disabled:border-[#444];
 }
 button:focus {
   outline: none;
 }
 button.ghost {
   @apply bg-[white] border-[color:var(--button\_text)] text-[color:var(--background\_color)] font-[bold];
-  font-family: pretendard;
+  font-family: pretendard, sans-serif;
 }
 .ghost:hover {
   @apply cursor-pointer;

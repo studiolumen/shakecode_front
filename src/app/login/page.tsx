@@ -4,7 +4,7 @@ import React, { FormEvent, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 import CanvasEffect from "@/app/login/CanvasEffect";
-import { passwordLogin, register } from "@/lib/api/auth.api";
+import { AuthApi } from "@/lib/api";
 
 import "./style.css";
 
@@ -28,7 +28,7 @@ const Login = () => {
     e.preventDefault();
 
     toast
-      .promise(passwordLogin(email, password), {
+      .promise(AuthApi.passwordLogin(email, password), {
         pending: "로그인중...",
         success: "로그인 성공",
         error: "로그인 실패",
@@ -51,7 +51,7 @@ const Login = () => {
     e.preventDefault();
 
     toast
-      .promise(register(name, email, nickname, password), {
+      .promise(AuthApi.register(name, email, nickname, password), {
         pending: "회원가입중...",
         success: "회원가입 성공",
         error: "회원가입 실패",
