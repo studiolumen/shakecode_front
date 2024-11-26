@@ -40,6 +40,7 @@ const Login = () => {
           const redirect = query.find((q) => q.startsWith("redirect="));
           if (redirect && redirect.split("=")[1]) {
             location.href = redirect.split("=")[1];
+            return;
           }
         }
         location.href = "/";
