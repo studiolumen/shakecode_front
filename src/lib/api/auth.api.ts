@@ -14,7 +14,9 @@ const client = axios.create({
 
 export const ping = async () => {
   try {
-    const res = await axiosClient.get("/auth/ping");
+    const res = await client.get("/auth/ping", {
+      headers: { Authorization: `Bearer ${cookie.get("token")}` },
+    });
     return res.status.toString().at(0) === "2";
   } catch (e) {
     return false;
@@ -51,15 +53,20 @@ export const passwordLogin = async (email: string, password: string) => {
 };
 
 export const logout = async (doNotRemoveToken = false) => {
-  if (doNotRemoveToken)
-    await axiosClient.post("/auth/logout", {
-      token: localStorage.getItem("refresh"),
-    });
+  if (!doNotRemoveToken)
+    axiosClient
+      .post("/auth/logout", {
+        token: localStorage.getItem("refresh"),
+      })
+      .then(() => {
+        cookie.remove("token");
+        localStorage.clear();
 
-  cookie.remove("token");
-  localStorage.clear();
-
-  SessionChecker();
+        SessionChecker();
+      })
+      .catch(() => {
+        // what should I do
+      });
 };
 
 export const refreshJWT = async ({ token }: { token: string }) => {

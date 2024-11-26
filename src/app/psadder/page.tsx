@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 import LoadProblem from "@/app/psadder/LoadProblem";
 import { Ranks, Testcase, UpdateProblem } from "@/app/psadder/type";
-import { ProblemApi } from "@/lib/api";
+import { ProblemApi, AuthApi } from "@/lib/api";
 import { deleteProblem } from "@/lib/api/problem.api";
 import SessionChecker from "@/lib/util/sessionChecker";
 
@@ -416,6 +416,10 @@ const PSAdder = () => {
         </button>
         <button className={"delete"} onClick={clear}>
           초기화
+        </button>
+        <br />
+        <button className={"delete"} onClick={() => AuthApi.logout()}>
+          로그아웃
         </button>
       </div>
       <div className={"container"}>

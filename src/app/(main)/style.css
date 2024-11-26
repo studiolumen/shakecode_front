@@ -1,0 +1,51 @@
+@keyframes fadeIn {
+  to {
+    @apply opacity-100 translate-y-0;
+  }
+}
+@keyframes grow {
+  to {
+    @apply opacity-100 scale-x-100;
+  }
+}
+
+
+body {
+  @apply bg-black flex justify-center items-center h-screen text-white m-0 p-0;
+  font-family: Pretendard, sans-serif;
+}
+.container {
+  @apply text-start;
+}
+.logo {
+  @apply mb-5;
+}
+.logo img {
+  @apply w-[300px];
+}
+.divider {
+  @apply w-full max-w-[400px] h-px bg-[#444] mx-auto my-5 scale-x-0;
+}
+.navigation {
+  @apply text-base text-[#888] font-thin;
+}
+.navigation p {
+  @apply mx-0 my-[5px];
+}
+.navigation a {
+  @apply no-underline text-inherit font-thin;
+}
+.navigation a strong {
+  @apply font-semibold text-white;
+}
+.edu {
+  @apply text-[#00c437];
+}
+.psadder {
+  @apply text-[#4563EB];
+}
+.logo,
+.divider,
+.navigation {
+  @apply opacity-0 translate-y-5;
+}
