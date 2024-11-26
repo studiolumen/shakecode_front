@@ -13,6 +13,6 @@ export const getProblem = async (id: number) => {
   return (await axiosClient.get(`/problem/full?id=${id}`)).data;
 };
 
-export const getProblemList = async () => {
-  return (await axiosClient.get("/problem/list")).data;
+export const getProblemList = async (all?: boolean) => {
+  return (await axiosClient.get(`/problem/list?all=${!!all}`)).data;
 };
