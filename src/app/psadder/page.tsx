@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import LoadProblem from "@/app/psadder/LoadProblem";
 import { Ranks, Testcase, UpdateProblem } from "@/app/psadder/type";
 import { ProblemApi } from "@/lib/api";
+import { deleteProblem } from "@/lib/api/problem.api";
 import SessionChecker from "@/lib/util/sessionChecker";
 
 import "./style.css";
@@ -201,7 +202,16 @@ const PSAdder = () => {
 
   const del = () => {
     if (confirm("정말 삭제하시겠습니까?")) {
-      //
+      toast
+        .promise(deleteProblem(parseInt(id)), {
+          pending: "삭제중입니다...",
+          success: "삭제에 성공하였습니다.",
+          error: "삭제에 실패하였습니다.",
+        })
+        .then(() => {
+          clearIntermediateSave();
+          clear();
+        });
     }
   };
 
