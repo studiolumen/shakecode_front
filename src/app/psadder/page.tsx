@@ -210,13 +210,13 @@ const PSAdder = () => {
         })
         .then(() => {
           clearIntermediateSave();
-          clear();
+          clear(true);
         });
     }
   };
 
-  const clear = () => {
-    if (confirm("정말 초기화하시겠습니까?")) {
+  const clear = (noask?: boolean) => {
+    if (noask || confirm("정말 초기화하시겠습니까?")) {
       setId("");
       setPid("");
       setName("");
@@ -414,7 +414,7 @@ const PSAdder = () => {
         <button className={"delete"} onClick={del}>
           삭제
         </button>
-        <button className={"delete"} onClick={clear}>
+        <button className={"delete"} onClick={() => clear()}>
           초기화
         </button>
         <br />
