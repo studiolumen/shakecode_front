@@ -233,7 +233,7 @@ const PSAdder = () => {
   useEffect(() => {
     if (
       parseInt(id) &&
-      (!isSaved ||
+      (isSaved ||
         (!isSaved &&
           confirm("수정사항을 무시하고 새로운 문제를 불러오시겠습니까?")))
     ) {
