@@ -45,7 +45,7 @@ instance.interceptors.response.use(
         await refreshJWT({ token: refreshToken });
         return instance.request(error.config);
       } catch (e) {
-        logout();
+        logout(true);
       }
     }
     return Promise.reject(error);

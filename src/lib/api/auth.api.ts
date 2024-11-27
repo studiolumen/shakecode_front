@@ -58,15 +58,18 @@ export const logout = async (doNotRemoveToken = false) => {
       .post("/auth/logout", {
         token: localStorage.getItem("refresh"),
       })
-      .then(() => {
+      .finally(() => {
         cookie.remove("token");
         localStorage.clear();
 
         SessionChecker();
-      })
-      .catch(() => {
-        // what should I do
       });
+  else {
+    cookie.remove("token");
+    localStorage.clear();
+
+    SessionChecker();
+  }
 };
 
 export const refreshJWT = async ({ token }: { token: string }) => {
