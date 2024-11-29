@@ -14,7 +14,7 @@ export const get = async (id: number) => {
 };
 
 export const getFull = async (id: number) => {
-  return (await axiosClient.get(`/problem/full?id=${id}`)).data;
+  return (await axiosClient.get(`/problem/full?id=${id}&hidden=false`)).data;
 };
 
 export const getList = async (all?: boolean) => {

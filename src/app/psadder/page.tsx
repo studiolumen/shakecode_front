@@ -237,7 +237,7 @@ const PSAdder = () => {
           confirm("수정사항을 무시하고 새로운 문제를 불러오시겠습니까?")))
     ) {
       toast
-        .promise(ProblemApi.get(parseInt(id)), {
+        .promise(ProblemApi.getFull(parseInt(id)), {
           pending: "불러오는 중...",
           success: "불러오기 성공",
           error: "불러오기 실패",
