@@ -29,6 +29,7 @@ const PSAdder = () => {
   const [time_limit, setTime_limit] = useState<number>(0);
   const [category, setCategory] = useState<string>("");
   const [testcases, setTestcases] = useState<Testcase[]>([]);
+  const [uploadTestcases, setUploadTestcases] = useState<Testcase[]>([]);
 
   const updatePreview = () => {
     const md = markdownIt({ html: true, breaks: true }).use(markdownItMathjax);
@@ -50,7 +51,7 @@ const PSAdder = () => {
       preview.current.innerHTML += "<hr />";
 
       testcases.forEach((testcase: Testcase, index: number) => {
-        if (testcase.show_user && preview.current) {
+        if (testcase.output && testcase.show_user && preview.current) {
           preview.current.innerHTML += `<strong>입력 ${
             index + 1
           }</strong><div style="background-color: gray;"><code>${md.render(
@@ -107,6 +108,32 @@ const PSAdder = () => {
     localStorage.removeItem("intermediateSavedProblemData");
   };
 
+  const addExampleCase = () => {
+    const copy = testcases.slice();
+    copy.push({ input: "", output: "", show_user: true });
+    setTestcases(copy);
+  };
+  const addHiddenCase = () => {
+    const copy = testcases.slice();
+    copy.push({ input: "", output: "", show_user: false });
+    setTestcases(copy);
+  };
+  const setTestcaseInput = (index: number, value: string) => {
+    const copy = testcases.slice();
+    copy[index].input = value;
+    setTestcases(copy);
+  };
+  const setTestcaseOutput = (index: number, value: string) => {
+    const copy = testcases.slice();
+    copy[index].output = value;
+    setTestcases(copy);
+  };
+  const removeTestcase = (index: number) => {
+    const copy = testcases.slice();
+    copy.splice(index, 1);
+    setTestcases(copy);
+  };
+
   const save = () => {
     intermediateSave();
     toast
@@ -118,7 +145,7 @@ const PSAdder = () => {
           memory_limit,
           time_limit,
           category,
-          testcases,
+          testcases: testcases.concat(uploadTestcases),
           restricted: 0,
         }),
         {
@@ -150,7 +177,7 @@ const PSAdder = () => {
           memory_limit,
           time_limit,
           category,
-          testcases,
+          testcases: testcases.concat(uploadTestcases),
           restricted: 0,
         }),
         {
@@ -296,6 +323,62 @@ const PSAdder = () => {
           onInput={(e) =>
             setDescription((e.target as HTMLTextAreaElement).value)
           }></textarea>
+        <label>사용자에게 보여줄 테스트케이스</label>
+        <div id="exampleCases">
+          {testcases.map((tc, index) =>
+            tc.show_user ? (
+              <div className="test-case-group" key={index}>
+                <textarea
+                  placeholder="입력"
+                  rows={2}
+                  value={tc.input}
+                  onChange={(e) => setTestcaseInput(index, e.target.value)}
+                  className="exampleCaseInput"></textarea>
+                <textarea
+                  placeholder="출력"
+                  rows={2}
+                  value={tc.output}
+                  onChange={(e) => setTestcaseOutput(index, e.target.value)}
+                  className="exampleCaseOutput"></textarea>
+                <button onClick={() => removeTestcase(index)}>X</button>
+              </div>
+            ) : null,
+          )}
+        </div>
+        <button
+          onClick={addExampleCase}
+          style={{ display: "block", marginBottom: "10px" }}>
+          테스트케이스 추가
+        </button>
+        <label style={{ display: "block", marginTop: "10px" }}>
+          안보여주는 테스트케이스
+        </label>
+        <div id="hiddenCases">
+          {testcases.map((tc, index) =>
+            !tc.show_user ? (
+              <div className="test-case-group" key={index}>
+                <textarea
+                  placeholder="입력"
+                  rows={2}
+                  value={tc.input}
+                  onChange={(e) => setTestcaseInput(index, e.target.value)}
+                  className="hiddenCaseInput"></textarea>
+                <textarea
+                  placeholder="출력"
+                  rows={2}
+                  value={tc.output}
+                  onChange={(e) => setTestcaseOutput(index, e.target.value)}
+                  className="hiddenCaseOutput"></textarea>
+                <button onClick={() => removeTestcase(index)}>X</button>
+              </div>
+            ) : null,
+          )}
+        </div>
+        <button
+          onClick={addHiddenCase}
+          style={{ display: "block", marginBottom: "10px" }}>
+          테스트케이스 추가
+        </button>
         <label>메모리 제한</label>
         <textarea
           id="memoryLimit"
@@ -349,7 +432,7 @@ const PSAdder = () => {
         setLoadProblemPage={setLoadProblemPage}
         setProblemId={setId}
       />
-      <DropZone setTestcases={setTestcases} />
+      <DropZone setTestcases={setUploadTestcases} />
     </>
   );
 };
