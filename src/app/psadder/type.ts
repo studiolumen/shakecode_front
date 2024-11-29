@@ -37,6 +37,10 @@ export type ProblemSummary = {
   category: string;
 };
 
+export type TestcaseGroup = {
+  [key: number]: { input: string; output: string };
+};
+
 export const Ranks: { [key: number]: string } = {
   0: "<span style='color: #A0A0A0'>I1</span>",
   1: "<span style='color: #A0A0A0'>I2</span>",

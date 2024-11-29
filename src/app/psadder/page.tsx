@@ -4,6 +4,7 @@ import markdownItMathjax from "markdown-it-mathjax3";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
+import DropZone from "@/app/psadder/DropZone";
 import LoadProblem from "@/app/psadder/LoadProblem";
 import { Ranks, Testcase, UpdateProblem } from "@/app/psadder/type";
 import { ProblemApi, AuthApi } from "@/lib/api";
@@ -49,7 +50,7 @@ const PSAdder = () => {
       preview.current.innerHTML += "<hr />";
 
       testcases.forEach((testcase: Testcase, index: number) => {
-        if (testcase.input && testcase.output && preview.current) {
+        if (testcase.show_user && preview.current) {
           preview.current.innerHTML += `<strong>입력 ${
             index + 1
           }</strong><div style="background-color: gray;"><code>${md.render(
@@ -104,35 +105,6 @@ const PSAdder = () => {
 
   const clearIntermediateSave = () => {
     localStorage.removeItem("intermediateSavedProblemData");
-  };
-
-  const addExampleCase = () => {
-    const copy = testcases.slice();
-    copy.push({ input: "", output: "", show_user: true });
-    setTestcases(copy);
-  };
-
-  const addHiddenCase = () => {
-    const copy = testcases.slice();
-    copy.push({ input: "", output: "", show_user: false });
-    setTestcases(copy);
-  };
-
-  const setTestcaseInput = (index: number, value: string) => {
-    const copy = testcases.slice();
-    copy[index].input = value;
-    setTestcases(copy);
-  };
-  const setTestcaseOutput = (index: number, value: string) => {
-    const copy = testcases.slice();
-    copy[index].output = value;
-    setTestcases(copy);
-  };
-
-  const removeTestcase = (index: number) => {
-    const copy = testcases.slice();
-    copy.splice(index, 1);
-    setTestcases(copy);
   };
 
   const save = () => {
@@ -324,62 +296,6 @@ const PSAdder = () => {
           onInput={(e) =>
             setDescription((e.target as HTMLTextAreaElement).value)
           }></textarea>
-        <label>사용자에게 보여줄 테스트케이스</label>
-        <div id="exampleCases">
-          {testcases.map((tc, index) =>
-            tc.show_user ? (
-              <div className="test-case-group" key={index}>
-                <textarea
-                  placeholder="입력"
-                  rows={2}
-                  value={tc.input}
-                  onChange={(e) => setTestcaseInput(index, e.target.value)}
-                  className="exampleCaseInput"></textarea>
-                <textarea
-                  placeholder="출력"
-                  rows={2}
-                  value={tc.output}
-                  onChange={(e) => setTestcaseOutput(index, e.target.value)}
-                  className="exampleCaseOutput"></textarea>
-                <button onClick={() => removeTestcase(index)}>X</button>
-              </div>
-            ) : null,
-          )}
-        </div>
-        <button
-          onClick={addExampleCase}
-          style={{ display: "block", marginBottom: "10px" }}>
-          테스트케이스 추가
-        </button>
-        <label style={{ display: "block", marginTop: "10px" }}>
-          안보여주는 테스트케이스
-        </label>
-        <div id="hiddenCases">
-          {testcases.map((tc, index) =>
-            !tc.show_user ? (
-              <div className="test-case-group" key={index}>
-                <textarea
-                  placeholder="입력"
-                  rows={2}
-                  value={tc.input}
-                  onChange={(e) => setTestcaseInput(index, e.target.value)}
-                  className="hiddenCaseInput"></textarea>
-                <textarea
-                  placeholder="출력"
-                  rows={2}
-                  value={tc.output}
-                  onChange={(e) => setTestcaseOutput(index, e.target.value)}
-                  className="hiddenCaseOutput"></textarea>
-                <button onClick={() => removeTestcase(index)}>X</button>
-              </div>
-            ) : null,
-          )}
-        </div>
-        <button
-          onClick={addHiddenCase}
-          style={{ display: "block", marginBottom: "10px" }}>
-          테스트케이스 추가
-        </button>
         <label>메모리 제한</label>
         <textarea
           id="memoryLimit"
@@ -408,6 +324,8 @@ const PSAdder = () => {
           onInput={(e) =>
             setCategory((e.target as HTMLTextAreaElement).value)
           }></textarea>
+        <span>테스트 케이스 {testcases.length}개 로드됨.</span>
+        <br />
         <button onClick={save}>저장</button>
         <button onClick={update}>수정</button>
         <button onClick={load}>불러오기</button>
@@ -431,6 +349,7 @@ const PSAdder = () => {
         setLoadProblemPage={setLoadProblemPage}
         setProblemId={setId}
       />
+      <DropZone setTestcases={setTestcases} />
     </>
   );
 };
