@@ -83,9 +83,9 @@ const DropZone = ({
           const id = parseInt(test.name.split(".")[0]);
           const isOutput = test.name.split(".")[1] === "a";
           if (!group[id]) group[id] = { input: "", output: "" };
-          group[id][isOutput ? "output" : "input"] = (
-            await test.text()
-          ).replaceAll("\r\n", "\n"); // CRLF to LF
+          group[id][isOutput ? "output" : "input"] = (await test.text())
+            .replaceAll("\r\n", "\n") // CRLF to LF
+            .replaceAll("\u0000", ""); // null byte removal
           loop++;
           if (loop === tests.length) resolve(group);
         });
