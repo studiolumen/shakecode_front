@@ -82,25 +82,25 @@ const PSAdder = () => {
       testcases,
       restricted: 0,
     };
-    localStorage.setItem("intermediateSavedProblemData", JSON.stringify(data));
+    // localStorage.setItem("intermediateSavedProblemData", JSON.stringify(data));
 
     setIsSaved(true);
   };
 
   const loadFromLocalStorage = () => {
     const data = localStorage.getItem("intermediateSavedProblemData");
-    if (data) {
-      const parsed = JSON.parse(data);
-      setId(parsed.id);
-      setPid(parsed.pid);
-      setName(parsed.name);
-      setDifficulty(parsed.difficulty);
-      setDescription(parsed.description);
-      setMemory_limit(parsed.memory_limit);
-      setTime_limit(parsed.time_limit);
-      setCategory(parsed.category);
-      setTestcases(parsed.testcases);
-    }
+    // if (data) {
+    //   const parsed = JSON.parse(data);
+    //   setId(parsed.id);
+    //   setPid(parsed.pid);
+    //   setName(parsed.name);
+    //   setDifficulty(parsed.difficulty);
+    //   setDescription(parsed.description);
+    //   setMemory_limit(parsed.memory_limit);
+    //   setTime_limit(parsed.time_limit);
+    //   setCategory(parsed.category);
+    //   setTestcases(parsed.testcases);
+    // }
   };
 
   const clearIntermediateSave = () => {
