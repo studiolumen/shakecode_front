@@ -10,6 +10,10 @@ export const update = async (problem: UpdateProblem) => {
 };
 
 export const get = async (id: number) => {
+  return (await axiosClient.get(`/problem?id=${id}`)).data;
+};
+
+export const getFull = async (id: number) => {
   return (await axiosClient.get(`/problem/full?id=${id}`)).data;
 };
 

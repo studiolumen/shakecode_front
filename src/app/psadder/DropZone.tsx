@@ -95,19 +95,11 @@ const DropZone = ({
     groupTests.then((group) => {
       const testcases: Testcase[] = [];
       Object.entries(group).forEach(([id, testcase], index) => {
-        if (parseInt(id) <= 3) {
-          testcases.push({
-            input: testcase.input,
-            output: testcase.output,
-            show_user: true,
-          });
-        } else {
-          testcases.push({
-            input: testcase.input,
-            output: testcase.output,
-            show_user: false,
-          });
-        }
+        testcases.push({
+          input: testcase.input,
+          output: testcase.output,
+          show_user: false,
+        });
         if (index === Object.keys(group).length - 1) setTestcases(testcases);
       });
     });
