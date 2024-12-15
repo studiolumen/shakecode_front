@@ -433,7 +433,7 @@ const PSAdder = () => {
         setLoadProblemPage={setLoadProblemPage}
         setProblemId={setId}
       />
-      <DropZone setTestcases={setUploadTestcases} />
+      <DropZone setTestcases={setTestcases} />
     </>
   );
 };
