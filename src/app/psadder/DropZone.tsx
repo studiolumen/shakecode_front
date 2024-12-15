@@ -69,6 +69,37 @@ const DropZone = ({
               });
             };
             readEntriesRecursively(reader);
+          } else {
+            const tests: FileSystemEntry[] = [];
+            const readEntriesRecursively = (
+              reader: FileSystemDirectoryReader,
+              testcases1: FileSystemEntry[],
+            ) => {
+              tests.push(...testcases1);
+              reader.readEntries((testcases2: FileSystemEntry[]) => {
+                if (testcases2.length === 0) {
+                  const testFiles: File[] = [];
+                  // extract file from file entry
+                  tests.forEach((test) => {
+                    (test as FileSystemFileEntry).file((testFile) => {
+                      testFiles.push(testFile);
+
+                      if (testFiles.length === tests.length) {
+                        const sorted = testFiles.sort(
+                          (a, b) =>
+                            parseInt(a.name.split(".")[0]) -
+                            parseInt(b.name.split(".")[0]),
+                        );
+                        resolve(sorted);
+                      }
+                    });
+                  });
+                  return;
+                }
+                readEntriesRecursively(reader, testcases2);
+              });
+            };
+            readEntriesRecursively(file, entries);
           }
         });
       });
@@ -81,7 +112,9 @@ const DropZone = ({
       loadTests.then((tests: File[]) => {
         tests.forEach(async (test) => {
           const id = parseInt(test.name.split(".")[0]);
-          const isOutput = test.name.split(".")[1] === "a";
+          const isOutput =
+            test.name.split(".")[1] === "a" ||
+            test.name.split(".")[1] === "out";
           if (!group[id]) group[id] = { input: "", output: "" };
           group[id][isOutput ? "output" : "input"] = (await test.text())
             .replaceAll("\r\n", "\n") // CRLF to LF
@@ -93,6 +126,7 @@ const DropZone = ({
     });
 
     groupTests.then((group) => {
+      console.log(group);
       const testcases: Testcase[] = [];
       Object.entries(group).forEach(([id, testcase], index) => {
         testcases.push({
