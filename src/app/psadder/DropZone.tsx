@@ -75,7 +75,7 @@ const DropZone = ({
               reader: FileSystemDirectoryReader,
               testcases1: FileSystemEntry[],
             ) => {
-              tests
+              testcases1
                 .filter((fe) => !fe.isFile)
                 .forEach((fe) => {
                   readEntriesRecursively(
@@ -93,15 +93,18 @@ const DropZone = ({
                       testFiles.push(testFile);
 
                       if (testFiles.length === tests.length) {
-                        const sorted = testFiles.sort(
-                          (a, b) =>
-                            parseInt(
-                              a.name.split(".")[0].replaceAll(/[^0-9]/, ""),
-                            ) -
-                            parseInt(
-                              b.name.split(".")[0].replaceAll(/[^0-9]/, ""),
-                            ),
-                        );
+                        const sorted = testFiles
+                          .filter((tf) => !tf.name.startsWith("."))
+                          .sort(
+                            (a, b) =>
+                              parseInt(
+                                a.name.split(".")[0].replaceAll(/[^0-9]/g, ""),
+                              ) -
+                              parseInt(
+                                b.name.split(".")[0].replaceAll(/[^0-9]/g, ""),
+                              ),
+                          );
+                        console.log(sorted);
                         resolve(sorted);
                       }
                     });
@@ -123,7 +126,9 @@ const DropZone = ({
       const group: TestcaseGroup = {};
       loadTests.then((tests: File[]) => {
         tests.forEach(async (test) => {
-          const id = parseInt(test.name.split(".")[0]);
+          const id = parseInt(
+            test.name.split(".")[0].replaceAll(/[^0-9]/g, ""),
+          );
           const isOutput =
             test.name.split(".")[1] === "a" ||
             test.name.split(".")[1] === "out";
