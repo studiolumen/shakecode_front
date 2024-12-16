@@ -30,6 +30,7 @@ const PSAdder = () => {
   const [category, setCategory] = useState<string>("");
   const [testcases, setTestcases] = useState<Testcase[]>([]);
   const [uploadTestcases, setUploadTestcases] = useState<Testcase[]>([]);
+  const [testcaseCount, setTestcaseCount] = useState<number>();
 
   const updatePreview = () => {
     const md = markdownIt({ html: true, breaks: true }).use(markdownItMathjax);
@@ -252,6 +253,7 @@ const PSAdder = () => {
           setTime_limit(problem.time_limit);
           setCategory(problem.category);
           setTestcases(problem.testCases);
+          setTestcaseCount(problem.testcasesCount);
           setIsSaved(true);
         });
     }
@@ -408,7 +410,7 @@ const PSAdder = () => {
           onInput={(e) =>
             setCategory((e.target as HTMLTextAreaElement).value)
           }></textarea>
-        <span>테스트 케이스 {testcases.length}개 로드됨.</span>
+        <span>테스트 케이스 {testcaseCount}개 로드됨.</span>
         <br />
         <button onClick={save}>저장</button>
         <button onClick={update}>수정</button>
