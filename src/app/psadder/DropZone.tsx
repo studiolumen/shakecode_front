@@ -75,7 +75,15 @@ const DropZone = ({
               reader: FileSystemDirectoryReader,
               testcases1: FileSystemEntry[],
             ) => {
-              tests.push(...testcases1);
+              tests
+                .filter((fe) => !fe.isFile)
+                .forEach((fe) => {
+                  readEntriesRecursively(
+                    (fe as FileSystemDirectoryEntry).createReader(),
+                    [],
+                  );
+                });
+              tests.push(...testcases1.filter((fe) => fe.isFile));
               reader.readEntries((testcases2: FileSystemEntry[]) => {
                 if (testcases2.length === 0) {
                   const testFiles: File[] = [];
@@ -87,8 +95,12 @@ const DropZone = ({
                       if (testFiles.length === tests.length) {
                         const sorted = testFiles.sort(
                           (a, b) =>
-                            parseInt(a.name.split(".")[0]) -
-                            parseInt(b.name.split(".")[0]),
+                            parseInt(
+                              a.name.split(".")[0].replaceAll(/[^0-9]/, ""),
+                            ) -
+                            parseInt(
+                              b.name.split(".")[0].replaceAll(/[^0-9]/, ""),
+                            ),
                         );
                         resolve(sorted);
                       }
