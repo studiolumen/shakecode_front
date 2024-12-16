@@ -356,27 +356,27 @@ const PSAdder = () => {
         <label style={{ display: "block", marginTop: "10px" }}>
           안보여주는 테스트케이스
         </label>
-        <div id="hiddenCases">
-          {testcases.map((tc, index) =>
-            !tc.show_user ? (
-              <div className="test-case-group" key={index}>
-                <textarea
-                  placeholder="입력"
-                  rows={2}
-                  value={tc.input}
-                  onChange={(e) => setTestcaseInput(index, e.target.value)}
-                  className="hiddenCaseInput"></textarea>
-                <textarea
-                  placeholder="출력"
-                  rows={2}
-                  value={tc.output}
-                  onChange={(e) => setTestcaseOutput(index, e.target.value)}
-                  className="hiddenCaseOutput"></textarea>
-                <button onClick={() => removeTestcase(index)}>X</button>
-              </div>
-            ) : null,
-          )}
-        </div>
+        {/*<div id="hiddenCases">*/}
+        {/*  {testcases.map((tc, index) =>*/}
+        {/*    !tc.show_user ? (*/}ㅡ,./
+        {/*      <div className="test-case-group" key={index}>*/}
+        {/*        <textarea*/}
+        {/*          placeholder="입력"*/}
+        {/*          rows={2}*/}
+        {/*          value={tc.input}*/}
+        {/*          onChange={(e) => setTestcaseInput(index, e.target.value)}*/}
+        {/*          className="hiddenCaseInput"></textarea>*/}
+        {/*        <textarea*/}
+        {/*          placeholder="출력"*/}
+        {/*          rows={2}*/}
+        {/*          value={tc.output}*/}
+        {/*          onChange={(e) => setTestcaseOutput(index, e.target.value)}*/}
+        {/*          className="hiddenCaseOutput"></textarea>*/}
+        {/*        <button onClick={() => removeTestcase(index)}>X</button>*/}
+        {/*      </div>*/}
+        {/*    ) : null,*/}
+        {/*  )}*/}
+        {/*</div>*/}
         <button
           onClick={addHiddenCase}
           style={{ display: "block", marginBottom: "10px" }}>
