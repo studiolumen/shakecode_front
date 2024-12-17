@@ -60,13 +60,13 @@ export const logout = async (doNotRemoveToken = false) => {
       })
       .finally(() => {
         cookie.remove("token");
-        localStorage.clear();
+        localStorage.removeItem("refresh");
 
         SessionChecker();
       });
   else {
     cookie.remove("token");
-    localStorage.clear();
+    localStorage.removeItem("refresh");
 
     SessionChecker();
   }
