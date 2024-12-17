@@ -78,7 +78,6 @@ const LoadProblem = ({
         <table style={{ width: "100%" }}>
           <thead>
             <tr>
-              <th>완료</th>
               <th>문제 번호</th>
               <th>난이도: </th>
               <th>문제 이름</th>
@@ -102,39 +101,15 @@ const LoadProblem = ({
                   Ranks[parseInt(problem.difficulty.toString())],
                 );
                 return (
-                  <tr key={index} style={{ textAlign: "center" }}>
-                    <td style={{ padding: "4px" }}>
-                      {/* 존나 귀찮아 */}
-                      {localStorage.getItem(problem.id) ? (
-                        <input
-                          type={"checkbox"}
-                          onChange={(e) =>
-                            !(e.target as HTMLInputElement).checked
-                              ? localStorage.removeItem(problem.id)
-                              : localStorage.setItem(problem.id, "true")
-                          }
-                          checked
-                        />
-                      ) : (
-                        <input
-                          type={"checkbox"}
-                          onChange={(e) =>
-                            !(e.target as HTMLInputElement).checked
-                              ? localStorage.removeItem(problem.id)
-                              : localStorage.setItem(problem.id, "true")
-                          }
-                        />
-                      )}
-                    </td>
+                  <tr
+                    key={index}
+                    style={{ textAlign: "center" }}
+                    onClick={() => openProblem(problem.id.toString())}>
                     <td style={{ padding: "4px" }}>{problem.pid}</td>
                     <td style={{ padding: "4px" }}>
                       {rank}: {problem.difficulty}
                     </td>
-                    <td
-                      style={{ padding: "4px" }}
-                      onClick={() => openProblem(problem.id.toString())}>
-                      {problem.title}
-                    </td>
+                    <td style={{ padding: "4px" }}>{problem.title}</td>
                     <td style={{ padding: "4px" }}>{problem.category}</td>
                     <td style={{ padding: "4px" }}>
                       {problem.description.slice(0, 80)}

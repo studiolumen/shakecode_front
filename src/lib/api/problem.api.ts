@@ -24,3 +24,13 @@ export const getList = async (all?: boolean) => {
 export const deleteProblem = async (id: string) => {
   return (await axiosClient.delete(`/problem/?id=${id}`)).data;
 };
+
+export const testCode = async (
+  problemId: string,
+  compiler: string,
+  code: string,
+) => {
+  return (
+    await axiosClient.post("/problem/checker", { problemId, compiler, code })
+  ).data;
+};
