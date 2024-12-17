@@ -116,7 +116,8 @@ export default function CodeTester() {
                 <SelectValue placeholder="컴파일러 선택" />
               </SelectTrigger>
               <SelectContent className="bg-gray-800 text-gray-300 border-gray-600">
-                <SelectItem value="gcc">C++</SelectItem>
+                <SelectItem value="gcc">C</SelectItem>
+                <SelectItem value="gpp">C++</SelectItem>
                 <SelectItem value="python">python3</SelectItem>
                 <SelectItem value="node">node.js</SelectItem>
               </SelectContent>
