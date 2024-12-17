@@ -143,7 +143,6 @@ const DropZone = ({
     });
 
     groupTests.then((group) => {
-      console.log(group);
       const testcases: Testcase[] = [];
       Object.entries(group).forEach(([id, testcase], index) => {
         testcases.push({
