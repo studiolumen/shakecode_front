@@ -149,55 +149,58 @@ export default function CodeTester() {
         {results.length > 0 && (
           <div className="mt-8 space-y-6">
             <h3 className="text-xl font-semibold text-gray-300">테스트 결과</h3>
-            {results.map((test, index) => (
-              <Card
-                key={index}
-                className={`${
-                  test.result ? "bg-gray-800" : "bg-gray-700"
-                } border-gray-700`}>
-                <CardContent className="pt-6">
-                  <div className="grid gap-4">
-                    <div
-                      className={`flex items-center gap-2 ${
-                        test.result ? "text-green-100" : "text-red-100"
-                      }`}>
-                      {test.result ? (
-                        <CheckCircle2 className="h-5 w-5" />
-                      ) : (
-                        <AlertCircle className="h-5 w-5" />
-                      )}
-                      테스트 케이스 {index + 1}: {test.result ? "통과" : "실패"}
+            {results
+              .filter(({ result }) => !result)
+              .map((test, index) => (
+                <Card
+                  key={index}
+                  className={`${
+                    test.result ? "bg-gray-800" : "bg-gray-700"
+                  } border-gray-700`}>
+                  <CardContent className="pt-6">
+                    <div className="grid gap-4">
+                      <div
+                        className={`flex items-center gap-2 ${
+                          test.result ? "text-green-100" : "text-red-100"
+                        }`}>
+                        {test.result ? (
+                          <CheckCircle2 className="h-5 w-5" />
+                        ) : (
+                          <AlertCircle className="h-5 w-5" />
+                        )}
+                        테스트 케이스 {index + 1}:{" "}
+                        {test.result ? "통과" : "실패"}
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <p className="font-semibold mb-2 text-gray-200">
+                            입력:
+                          </p>
+                          <pre className="p-2 bg-gray-800 rounded-md whitespace-pre-wrap text-gray-300">
+                            {test.input}
+                          </pre>
+                        </div>
+                        <div>
+                          <p className="font-semibold mb-2 text-gray-200">
+                            예상 출력:
+                          </p>
+                          <pre className="p-2 bg-gray-800 rounded-md whitespace-pre-wrap text-gray-300">
+                            {test.output}
+                          </pre>
+                        </div>
+                        <div>
+                          <p className="font-semibold mb-2 text-gray-200">
+                            출력:
+                          </p>
+                          <pre className="p-2 bg-gray-800 rounded-md whitespace-pre-wrap text-gray-300">
+                            {test.real}
+                          </pre>
+                        </div>
+                      </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div>
-                        <p className="font-semibold mb-2 text-gray-200">
-                          입력:
-                        </p>
-                        <pre className="p-2 bg-gray-800 rounded-md whitespace-pre-wrap text-gray-300">
-                          {test.input}
-                        </pre>
-                      </div>
-                      <div>
-                        <p className="font-semibold mb-2 text-gray-200">
-                          예상 출력:
-                        </p>
-                        <pre className="p-2 bg-gray-800 rounded-md whitespace-pre-wrap text-gray-300">
-                          {test.output}
-                        </pre>
-                      </div>
-                      <div>
-                        <p className="font-semibold mb-2 text-gray-200">
-                          출력:
-                        </p>
-                        <pre className="p-2 bg-gray-800 rounded-md whitespace-pre-wrap text-gray-300">
-                          {test.real}
-                        </pre>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
 
             <div className="flex items-center gap-2 text-gray-400">
               <CheckCircle2 className="h-5 w-5" />
