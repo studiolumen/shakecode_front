@@ -34,13 +34,13 @@ const DropZone = ({
       // search for tests directory
       files.forEach((file) => {
         file.readEntries((entries: FileSystemEntry[]) => {
-          const entry: any = entries.find(
+          const poligonEntry: any = entries.find(
             (entry) => entry.name.indexOf("tests") !== -1,
           );
-          if (entry) {
+          if (poligonEntry) {
             // extract testcase file entry from directory
             const tests: FileSystemEntry[] = [];
-            const reader = entry.createReader();
+            const reader = poligonEntry.createReader();
             const readEntriesRecursively = (
               reader: FileSystemDirectoryReader,
             ) => {
