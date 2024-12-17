@@ -30,6 +30,8 @@ import { Testcase } from "@/app/psadder/type";
 import { ProblemApi, AuthApi } from "@/lib/api";
 import SessionChecker from "@/lib/util/sessionChecker";
 
+import "./anti-block.css";
+
 const PSAdder = () => {
   const preview = useRef<HTMLDivElement>(null);
   const previewNotice = useRef<HTMLDivElement>(null);
