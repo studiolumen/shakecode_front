@@ -1,5 +1,6 @@
 "use client";
 
+import "katex/dist/katex.min.css";
 import {
   Save,
   Trash2,
@@ -13,7 +14,11 @@ import {
 import markdownIt from "markdown-it";
 import markdownItMathjax from "markdown-it-mathjax3";
 import { useEffect, useRef, useState } from "react";
+import Markdown from "react-markdown";
 import { toast } from "react-toastify";
+import rehypeKatex from "rehype-katex";
+import rehypeRaw from "rehype-raw";
+import remarkMath from "remark-math";
 
 import DropZone from "@/app/psadder/components/DropZone";
 import LoadProblem from "@/app/psadder/components/LoadProblem";
@@ -509,11 +514,12 @@ const PSAdder = () => {
                 </span>
               </div>
             </div>
-            <div
-              ref={preview}
-              className="preview prose prose-invert max-w-none mb-8">
+            <Markdown
+              className="preview prose prose-invert max-w-none mb-8 markdown"
+              remarkPlugins={[remarkMath]}
+              rehypePlugins={[rehypeKatex, rehypeRaw]}>
               {description || "문제 설명을 입력해주세요."}
-            </div>
+            </Markdown>
             <div className="space-y-6">
               <h2 className="text-2xl font-semibold text-gray-300 mb-4">
                 예제 입출력
